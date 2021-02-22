@@ -554,8 +554,9 @@ GameObject:
   - component: {fileID: 1686942100}
   - component: {fileID: 1686942099}
   - component: {fileID: 1686942098}
-  - component: {fileID: 1686942097}
   - component: {fileID: 1686942101}
+  - component: {fileID: 1686942097}
+  - component: {fileID: 1686942102}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -572,10 +573,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1686942096}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c791168a803cb64da787bfd01af4c22, type: 3}
+  m_Script: {fileID: 11500000, guid: d6c3fab10ee70ce4d8a2b77e55b6c0ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  steamSettings: {fileID: 11400000, guid: 42fa4adf69b4e504e8421eaca2c1dd48, type: 2}
+  OnServerAuthenticated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClientAuthenticated:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1686942098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,17 +620,17 @@ MonoBehaviour:
   runInBackground: 1
   autoStartServerBuild: 0
   showDebugMessages: 0
-  serverTickRate: 60
+  serverTickRate: 128
   serverBatching: 0
   serverBatchInterval: 0
   offlineScene: 
   onlineScene: 
   transport: {fileID: 1686942098}
   networkAddress: localhost
-  maxConnections: 4
+  maxConnections: 8
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
-  authenticator: {fileID: 0}
+  authenticator: {fileID: 1686942097}
   playerPrefab: {fileID: 636927014800093959, guid: 03add72ad1b0fbb4696a4286d006765d, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
@@ -644,6 +650,19 @@ Transform:
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1686942101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686942096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c791168a803cb64da787bfd01af4c22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  steamSettings: {fileID: 11400000, guid: 42fa4adf69b4e504e8421eaca2c1dd48, type: 2}
+--- !u!114 &1686942102
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

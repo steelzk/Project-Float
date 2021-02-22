@@ -6,40 +6,72 @@ namespace Steel.Networking
 {
     public class SNetworkManager : NetworkManager
     {
+        public new static SNetworkManager singleton;
+
+        public override void Awake()
+        {
+            base.Awake();
+
+            // singleton reference
+            if (singleton == null)
+                singleton = this;
+            else if (singleton != this)
+                Destroy(this);
+        }
+
+        #region ServerSide
         public override void OnStartServer()
         {
             base.OnStopServer();
+            Debug.Log("Server Started");
+        }
 
-            Debug.Log($"Listening on {Steamworks.SteamServer.PublicIp}/{Steel.Steam.SSteamSettings.current.server.gamePort}");
+        public override void OnServerConnect(NetworkConnection conn)
+        {
+            base.OnServerConnect(conn);
+
+            Debug.Log($"Incomming connection from: {conn.connectionId}");
+        }
+
+        public override void OnServerAddPlayer(NetworkConnection conn)
+        {
+            base.OnServerAddPlayer(conn);
+        }
+        #endregion
+        #region ClientSide
+
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+        }
+
+        public override void OnStartHost()
+        {
+            base.OnStartHost();
+
+            SSceneManager.GoClientScene();
+        }
+
+        public override void OnStopHost()
+        {
+            base.OnStopHost();
+
+            SSceneManager.GoMainMenu();
         }
 
         public override void OnClientConnect(NetworkConnection conn)
         {
             base.OnClientConnect(conn);
 
-            UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("client_0", UnityEngine.SceneManagement.LoadSceneMode.Additive);
-            UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("menu_0");
-
-            // send auth ticket to server
-            AuthTicket ticket = SteamUser.GetAuthSessionTicket();
-
-            JoinPacket packet = new JoinPacket()
-            {
-                steamId = SteamClient.SteamId,
-                authTicket = ticket.Data
-            };
-
-            NetworkClient.Send(packet);
-
-            Debug.Log("[Client] Sent Join Packet to server!");
+            SSceneManager.GoClientScene();
         }
 
         public override void OnClientDisconnect(NetworkConnection conn)
         {
             base.OnClientDisconnect(conn);
 
-            UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("client_0");
-            UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("menu_0", UnityEngine.SceneManagement.LoadSceneMode.Additive);
+            SSceneManager.GoMainMenu();
         }
+        #endregion
     }
 }

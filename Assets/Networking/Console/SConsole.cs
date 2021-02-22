@@ -57,8 +57,6 @@ public class SConsole : MonoBehaviour
 
         if (Console.CursorLeft != 0)
             input.ClearLine();
-
-        input.RedrawInputLine();
     }
 
     private void Update()

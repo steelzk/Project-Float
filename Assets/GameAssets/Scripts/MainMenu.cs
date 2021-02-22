@@ -16,13 +16,37 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] private TMP_InputField serverNameInput;
     [SerializeField] private TMP_InputField maxPlayersInput;
+    [SerializeField] private Toggle localNetworkToggle;
 
     private Steamworks.ServerList.Internet internetListing;
+    private Steamworks.ServerList.LocalNetwork localListing;
 
-    private void Awake()
+    private void OnEnable()
     {
-        internetListing = new Steamworks.ServerList.Internet();
-        internetListing.OnResponsiveServer += OnServerRequest;
+        ShowJoinTab();
+        ChangeListType();
+    }
+
+    private void OnDisable()
+    {
+        internetListing.OnResponsiveServer -= OnServerRequest;
+        localListing.OnResponsiveServer -= OnServerRequest;
+    }
+
+    public void ChangeListType()
+    {
+        if (localNetworkToggle.isOn)
+        {
+            localListing = new Steamworks.ServerList.LocalNetwork();
+            localListing.OnResponsiveServer += OnServerRequest;
+            internetListing.OnResponsiveServer -= OnServerRequest;
+        } else
+        {
+            internetListing = new Steamworks.ServerList.Internet();
+            internetListing.OnResponsiveServer += OnServerRequest;
+            localListing.OnResponsiveServer -= OnServerRequest;
+        }
+        RefreshListings();
     }
 
     public void ShowJoinTab()
@@ -39,17 +63,28 @@ public class MainMenu : MonoBehaviour
 
     public void RefreshListings()
     {
-        internetListing.RunQueryAsync();
+        Debug.Log("Refreshing Server Listings...");
+
+        if (localNetworkToggle.isOn)
+            localListing.RunQueryAsync();
+        else
+            internetListing.RunQueryAsync();
     }
 
     public void StartHostGame()
     {
         SSteamSettings.current.server.maxPlayerCount = int.Parse(maxPlayersInput.text);
-        SNetworkManager.singleton.StartHost();
+        SSteamSettings.current.server.serverName = serverNameInput.text;
+        SSteamClient.singleton.HostLobby();
     }
+
+    public void QuitGame() => Application.Quit();
 
     private void OnServerRequest(ServerInfo info)
     {
-        ServerListing.Create(info, serverList.transform, serverListingPrefab);
+        Debug.Log($"ServerRequest: {info.Address}");
+
+        var listing = Instantiate(serverListingPrefab, serverList.transform).GetComponent<ServerListing>();
+        listing.RefreshListing(info);
     }
 }

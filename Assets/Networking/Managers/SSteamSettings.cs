@@ -9,70 +9,8 @@ namespace Steel.Steam
         public static SSteamSettings current;
 
         public uint applicationId = 1541370;
-        public bool steamInitialized { get; private set; }
 
         public GameServer server = new GameServer();
-
-        public void InitServer()
-        {
-            current = this;
-
-            // init steamserver
-            SteamServerInit serverInit = new SteamServerInit()
-            {
-                DedicatedServer = server.isDedicated,
-                GameDescription = server.serverDescription,
-                GamePort = server.gamePort,
-                QueryPort = server.queryPort,
-                SteamPort = server.steamPort,
-                ModDir = server.modDir,
-                VersionString = server.serverVersion,
-                Secure = server.isSecure //* needed for server to be listed
-            };
-
-            // initialize steam client
-            try
-            {
-                SteamServer.Init(applicationId, serverInit, true);
-            }
-            catch (System.Exception e)
-            {
-                Debug.Log($"STEAM_API Server Could not Initialize!: {e}");
-            }
-
-            // check if initialized
-            if (SteamServer.IsValid)
-            {
-                current.steamInitialized = true;
-            }
-        }
-
-        public void InitClient()
-        {
-            current = this;
-
-            // open steam version
-            if (SteamClient.RestartAppIfNecessary(applicationId))
-            {
-                Application.Quit();
-                return;
-            }
-
-            // initialize steam client
-            try
-            {
-                SteamClient.Init(applicationId, true);
-            } catch (System.Exception e)
-            {
-                Debug.Log($"STEAM_API Client Could not Initialize!: {e}");
-            }
-
-            // check if initialized
-            if (SteamServer.IsValid)
-            {
-                current.steamInitialized = true;
-            }
-        }
 
         public void Shutdown()
         {

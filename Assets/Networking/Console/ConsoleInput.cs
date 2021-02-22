@@ -10,7 +10,7 @@ namespace Windows
 	{
 		//public delegate void InputText( string strInput );
 		public event System.Action<string> OnInputText;
-		public string inputString;
+		public string inputString = "";
 
 		public void ClearLine()
 		{

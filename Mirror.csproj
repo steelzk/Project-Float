@@ -70,9 +70,12 @@
     <Compile Include="Assets\Mirror\Runtime\ExponentialMovingAverage.cs" />
     <Compile Include="Assets\Mirror\Runtime\SyncObject.cs" />
     <Compile Include="Assets\Mirror\Runtime\Logging\EditorLogSettingsLoader.cs" />
+    <Compile Include="Assets\Mirror\Runtime\Transport\FizzyFacepunch\BidirectionalDictionary.cs" />
     <Compile Include="Assets\Mirror\Runtime\Transport\Transport.cs" />
     <Compile Include="Assets\Mirror\Runtime\SyncList.cs" />
+    <Compile Include="Assets\Mirror\Runtime\Transport\FizzyFacepunch\Common.cs" />
     <Compile Include="Assets\Mirror\Runtime\Transport\MultiplexTransport.cs" />
+    <Compile Include="Assets\Mirror\Runtime\Transport\FizzyFacepunch\Server.cs" />
     <Compile Include="Assets\Mirror\Runtime\Compression.cs" />
     <Compile Include="Assets\Mirror\Runtime\NetworkManager.cs" />
     <Compile Include="Assets\Mirror\Runtime\LogFactory.cs" />
@@ -81,6 +84,7 @@
     <Compile Include="Assets\Mirror\Runtime\Transport\MiddlewareTransport.cs" />
     <Compile Include="Assets\Mirror\Runtime\RemoteCallHelper.cs" />
     <Compile Include="Assets\Mirror\Runtime\NetworkConnectionToServer.cs" />
+    <Compile Include="Assets\Mirror\Runtime\Transport\FizzyFacepunch\FizzyFacepunch.cs" />
     <Compile Include="Assets\Mirror\Runtime\NetworkIdentity.cs" />
     <Compile Include="Assets\Mirror\Runtime\NetworkManagerHUD.cs" />
     <Compile Include="Assets\Mirror\Runtime\Logging\LogFactory.cs" />
@@ -99,6 +103,7 @@
     <Compile Include="Assets\Mirror\Runtime\LocalConnections.cs" />
     <Compile Include="Assets\Mirror\Runtime\Messages.cs" />
     <Compile Include="Assets\Mirror\Runtime\ClientScene.cs" />
+    <Compile Include="Assets\Mirror\Runtime\Transport\FizzyFacepunch\Client.cs" />
     <Compile Include="Assets\Mirror\Runtime\MessagePacker.cs" />
     <Compile Include="Assets\Mirror\Runtime\Pool.cs" />
     <Compile Include="Assets\Mirror\Runtime\NetworkConnectionToClient.cs" />
@@ -110,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Mirror\Runtime\Mirror.asmdef" />
+     <None Include="Assets\Mirror\Runtime\Transport\FizzyFacepunch\version.txt" />
     <Reference Include="UnityEngine">
       <HintPath>E:\Unity\Editors\2020.2.3f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

@@ -136,6 +136,7 @@
     <Compile Include="Assets\Doozy\Engine\Themes\Targets\ColorTargetImage.cs" />
     <Compile Include="Assets\Doozy\Engine\Soundy\SoundyPooler.cs" />
     <Compile Include="Assets\Doozy\Engine\Themes\Structs\FontAssetId.cs" />
+    <Compile Include="Assets\GameAssets\Scripts\TabLayoutGroup.cs" />
     <Compile Include="Assets\Doozy\Engine\UI\Nodes\UIDrawerNode.cs" />
     <Compile Include="Assets\Doozy\Engine\Utils\FileUtils.cs" />
     <Compile Include="Assets\Doozy\Engine\Utils\ColorModels\HSL.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="Assets\Doozy\Engine\Progress\Enums\TargetProgress.cs" />
     <Compile Include="Assets\GameAssets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Doozy\Engine\UI\Input\KeyToAction.cs" />
+    <Compile Include="Assets\Networking\Managers\SSteamAuthenticator.cs" />
     <Compile Include="Assets\Doozy\Integrations\Playmaker\Actions\DoozyUI\ApplicationQuit.cs" />
     <Compile Include="Assets\Doozy\Engine\Progress\ProgressTargets\ProgressTargetAnimator.cs" />
     <Compile Include="Assets\Doozy\Engine\UI\Nodes\UnloadSceneNode.cs" />
@@ -269,6 +271,7 @@
     <Compile Include="Assets\Doozy\Engine\Events\TextureEvent.cs" />
     <Compile Include="Assets\Doozy\Engine\UI\Connections\UIConnection.cs" />
     <Compile Include="Assets\Doozy\Engine\UI\UIPopup\UIPopupSettings.cs" />
+    <Compile Include="Assets\GameAssets\Scripts\SSceneManager.cs" />
     <Compile Include="Assets\Doozy\Engine\UI\Nodes\PortalNode.cs" />
     <Compile Include="Assets\Doozy\Engine\Scripts\GameEventListener.cs" />
     <Compile Include="Assets\Doozy\Engine\UI\UIView\UIViewSettings.cs" />
@@ -323,12 +326,13 @@
     <Compile Include="Assets\Doozy\Engine\Themes\Targets\TextureTargetRawImage.cs" />
     <Compile Include="Assets\Doozy\Integrations\Playmaker\Actions\DoozyUI\ShowUIView.cs" />
     <Compile Include="Assets\Doozy\Engine\Scripts\MessageExtensions.cs" />
+    <Compile Include="Assets\BasicMove.cs" />
     <Compile Include="Assets\Doozy\Engine\Utils\ColorModels\XYZ.cs" />
     <Compile Include="Assets\Doozy\Engine\Themes\Targets\TextureTargetUnityEvent.cs" />
     <Compile Include="Assets\Doozy\Engine\UI\Nodes\ThemeNode.cs" />
     <Compile Include="Assets\Doozy\Engine\Progress\ProgressTargets\ProgressTargetImage.cs" />
     <Compile Include="Assets\Doozy\Engine\Themes\Targets\SpriteTargetSpriteRenderer.cs" />
-    <Compile Include="Assets\GameAssets\Scripts\TabLayoutGroup.cs" />
+    <Compile Include="Assets\PauseMenu.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll" />
@@ -375,6 +379,7 @@
      <None Include="Assets\Steamworks\Facepunch.Steamworks.Posix.dll" />
      <None Include="Assets\Doozy\Examples\Fonts\Pacifico\OFL.txt" />
      <None Include="Assets\Doozy\Examples\Fonts\Bangers\OFL.txt" />
+     <None Include="Assets\beffio\UI - BUILDER\Source Files\Fonts\OpenSans-Familiy\OpenSansLic.txt" />
      <None Include="Assets\Doozy\Engine\Debug\DDebug.dll" />
      <None Include="Assets\ScriptTemplates\50-Mirror__Network Manager-NewNetworkManager.cs.txt" />
      <None Include="Assets\ScriptTemplates\54-Mirror__Network Room Manager-NewNetworkRoomManager.cs.txt" />

@@ -7,69 +7,45 @@ namespace Steel.Steam
 {
     public class SSteamServer : MonoBehaviour
     {
-        public SSteamSettings steamSettings;
+        public static SSteamServer singleton;
 
-        private NetworkManager networkManager;
+        public SSteamSettings steamSettings;
 
         private void Awake()
         {
-            networkManager = GetComponent<NetworkManager>();
+            // singleton reference
+            if (singleton == null)
+                singleton = this;
+            else if (singleton != this)
+                Destroy(this);
 
             // setup callbacks
             SteamServer.OnSteamServersConnected += OnSteamServersConnect;
             SteamServer.OnSteamServersDisconnected += OnSteamServersDisconnect;
             SteamServer.OnSteamServerConnectFailure += OnSteamServersConnectFail;
-            SteamServer.OnValidateAuthTicketResponse += OnAuthChange;
 
-            // initialize client
-            steamSettings.InitServer();
-
-            if (!steamSettings.steamInitialized)
+            SteamServerInit serverInit = new SteamServerInit()
             {
-                Debug.LogWarning($"STEAM_API Init Server call failed!");
-                return;
-            }
+                DedicatedServer = true,
+                Secure = true,
+                GameDescription = steamSettings.server.serverDescription,
+                ModDir = steamSettings.server.modDir,
+                SteamPort = steamSettings.server.steamPort,
+                VersionString = steamSettings.server.serverVersion,
+                GamePort = steamSettings.server.gamePort,
+                IpAddress = System.Net.IPAddress.Any,
+                QueryPort = steamSettings.server.queryPort
+            };
 
-            // set server properties
-            SteamServer.Passworded = steamSettings.server.passwordProtected;
-            SteamServer.MaxPlayers = steamSettings.server.maxPlayerCount;
-            SteamServer.MapName = steamSettings.server.serverMap;
+            SteamServer.Init(steamSettings.applicationId, serverInit, true);
+
+            SteamServer.MaxPlayers = SNetworkManager.singleton.maxConnections = steamSettings.server.maxPlayerCount;
             SteamServer.ServerName = steamSettings.server.serverName;
-            SteamServer.AutomaticHeartbeats = steamSettings.server.enableHeartbeats;
+            SteamServer.MapName = steamSettings.server.serverMap;
             SteamServer.Passworded = steamSettings.server.passwordProtected;
-            networkManager.maxConnections = steamSettings.server.maxPlayerCount;
+            SteamServer.AutomaticHeartbeats = steamSettings.server.enableHeartbeats;
 
-            // login to steam servers
             SteamServer.LogOnAnonymous();
-
-            Debug.Log("[SteamManager] Steam Game Server Started. Waiting for connection result");
-        }
-
-        private void OnP2PSessionRequest(NetworkConnection conn, JoinPacket packet)
-        {
-            Debug.Log($"[SteamServer] Received P2P Session Request: {packet.steamId}");
-
-            SteamId id = new SteamId();
-            id.Value = packet.steamId;
-            
-            // authenticate user
-            if (!SteamServer.BeginAuthSession(packet.authTicket, id))
-            {
-                Debug.Log($"[SteamServer] Could not authenticate client: {id}");
-            }
-        }
-
-        private void OnAuthChange(SteamId id, SteamId id2, AuthResponse response)
-        {
-            if (response == AuthResponse.OK)
-            {
-                SteamNetworking.AcceptP2PSessionWithUser(id);
-                Debug.Log($"[SteamServer] Accepted P2PSession: {id}");
-            } else
-            {
-                SteamNetworking.CloseP2PSessionWithUser(id);
-                Debug.Log($"[SteamServer] Denied P2PSession: {id}");
-            }
         }
 
         private void OnApplicationQuit()
@@ -82,22 +58,19 @@ namespace Steel.Steam
         {
             Debug.Log("[SteamServer] Connection to Steam's API successful!");
 
+            // set server info
             steamSettings.server.ip = SteamServer.PublicIp;
-            NetworkServer.RegisterHandler<JoinPacket>(OnP2PSessionRequest);
 
-            networkManager.StartServer();
+            SNetworkManager.singleton.StartServer();
         }
         private void OnSteamServersDisconnect(Result result)
         {
             Debug.Log($"[SteamServer] Disonnected from Steam's API: {result}");
-
-            if (networkManager.isNetworkActive) networkManager.StopServer();
+            SNetworkManager.singleton.StopServer();
         }
         private void OnSteamServersConnectFail(Result result, bool trying)
         {
             Debug.Log($"[SteamServer] Failed to connect to Steam's API: {result}");
-
-            if (networkManager.isNetworkActive) networkManager.StopServer();
         }
         #endregion
     }

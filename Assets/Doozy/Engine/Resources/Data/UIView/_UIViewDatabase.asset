@@ -17,6 +17,8 @@ MonoBehaviour:
   - Custom
   - Example
   - General
+  - Pause Menu
   Categories:
   - {fileID: 11400000, guid: b01e98f4801f7124ba39e1dac4debf90, type: 2}
   - {fileID: 11400000, guid: c5027abacc03d1c4e98de132f8c0e67b, type: 2}
+  - {fileID: 11400000, guid: 67a99c451e877cd4e8b9590fe92ddb37, type: 2}

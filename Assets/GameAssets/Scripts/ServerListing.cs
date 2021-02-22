@@ -4,18 +4,13 @@ using UnityEngine;
 using Steamworks.Data;
 using Mirror;
 using Steel.Networking;
+using Steel.Steam;
 
 public class ServerListing : MonoBehaviour
 {
     [SerializeField] private TMPro.TextMeshProUGUI serverInfoText;
 
     private ServerInfo serverInfo;
-
-    public static void Create(ServerInfo info, Transform listingParent, GameObject listingPrefab)
-    {
-        var listing = Instantiate(listingPrefab, listingParent);
-        listing.GetComponent<ServerListing>().RefreshListing(info);
-    }
 
     public void RefreshListing(ServerInfo info)
     {
@@ -25,9 +20,6 @@ public class ServerListing : MonoBehaviour
 
     public void ConnectToListing()
     {
-        SNetworkManager.singleton.networkAddress = serverInfo.Address.ToString();
-        SNetworkManager.singleton.StartClient();
+        SSteamClient.singleton.ConnectToServer(serverInfo.Address.ToString());
     }
-
-
 }
